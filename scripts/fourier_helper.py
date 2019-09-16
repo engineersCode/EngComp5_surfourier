@@ -1,3 +1,5 @@
+# This helper was co-created by Olivier Mesnard and Natalia Clementi
+
 import numpy
 from IPython.display import HTML
 import ipywidgets
@@ -23,9 +25,10 @@ class Circle:
         """Get the coordinates on the circle
 
         Arguments:
-        theta {array} -- Array of angles in radians (default: {None})
-        num {int}     -- Number of points to discretize theta if theta is None
-                         (default: {50})
+        theta {array, float} -- Array/float of angles in radians
+                                (default: {None})
+        num {int}            -- Number of points to discretize theta if theta
+                                is None (default: {50})
         Returns:
         x {numpy.ndarray of floats} -- x-coordinates of the points
                                        on the circle (1D array).
@@ -49,8 +52,11 @@ class Element:
         ----------
         f : float
             The frequency.
-        shift : float (optional)
+        shift_x : float (optional)
             Horizontal shift of the circle (x-coordinate of the center);
+            default: 0.0.
+        shift_y : float (optional)
+            Vertical shift of the circle (y-coordinate of the center);
             default: 0.0.
 
         """
@@ -97,18 +103,60 @@ class Element:
             xmax = t
         return ((xmin, xmax), (y, y))
 
-        def rline(self, t):
-            """Get the position of the radial line from the center.
-            
-            Parameters
-            ----------
-            t : float
-                Angle in radians.
+    def rline(self, t):
+        """Get the position of the radial line from the center.
+        
+        Parameters
+        ----------
+        t : float
+            Angle in radians.
 
-            Returns
-            -------
-            pos : tuple
-                Position of the horizontal line.
-            """
-            x, y = self.circle.coordinates(theta=self.f * t)
-            return ((self.circle.xc, x), (self.circle.yc, y))
+        Returns
+        -------
+        pos : tuple
+            Position of the horizontal line.
+        """
+        x, y = self.circle.coordinates(theta=self.f * t)
+        return ((self.circle.xc, x), (self.circle.yc, y))
+
+
+def create_elements_center(freq, x_shift, y_shift):
+    """ It creates center elements to produce animation
+    for different waves and respective circles based on
+    their frequency.
+    
+    Arguments
+    ---------
+    freq: float or list. Frequency of desired waves.
+    x_shift: float, x-shift of the circle (x-coord of center)
+    y_shift: float, y-shift of the circle (y-coord of center)
+    
+    Returns
+    -------
+    elems: list with the elements all center on same coordinates.
+    """
+    
+    elems = [Element(f, shift_x=x_shift, shift_y=y_shift)
+             for f in freq]
+    
+    return elems
+
+
+def define_angles(periods, steps_per_period):
+    """Creates array of angles that goes from 0 to 2*pi*periods, and contains
+    periods*steps_per_period number of steps.
+
+    Arguments
+    ---------
+    periods: float, number of periods.
+    steps_per_period: int, number of steps per period.
+
+    Returns
+    -------
+    theta_arr: numpy array, array of angles.
+    """
+
+    steps = periods * steps_per_period
+    theta_arr = numpy.linspace(0.0, 2*numpy.pi*periods, num=steps)
+
+    return theta_arr 
