@@ -173,7 +173,8 @@ def create_init_fig_center(elements, theta_arr):
 
     Returns
     -------
-    Plot with initial figure needed to plot animation. 
+    Plot with initial figure needed to plot animation.
+    Dictionary with plot elements we will need for the animation. 
     """
     pyplot.ioff() #to avoid displaying figure.
 
@@ -194,7 +195,7 @@ def create_init_fig_center(elements, theta_arr):
     ax.set_xlim(-4.0, 14.0)
     ax.set_ylim(-2.0, 2.0)
 
-    return fig, ax, hlines, rlines, signals
+    return {'fig': fig, 'hlines': hlines, 'rlines':rlines, 'signals': signals}
 
 
 def update_figure_center(n, anim_dict, theta, display_fig=False):
@@ -294,7 +295,9 @@ def create_init_fig_displaced(elements, theta_arr, label_sum):
     ax.set_xlim(-5.0, 14.0)
     ax.set_ylim(-2.0, 2.0);
 
-    return fig, ax, circles, rlines, trace_x, trace_y, trace_plot, hline, signal 
+    return {'fig': fig, 'circles': circles, 'rlines': rlines,
+            'trace_x': trace_x, 'trace_y': trace_y, 'trace_plot': trace_plot, 
+            'hline': hline, 'signal': signal}
 
 
 def update_figure_displaced(n, anim_dict, theta, display_fig=False):
@@ -313,7 +316,7 @@ def update_figure_displaced(n, anim_dict, theta, display_fig=False):
 
     """
     # Update the position of the radial line of the biggest circle.
-    anim_dict['rlines2'][0].set_data(*anim_dict['elems_dis'][0].rline(theta[n]))
+    anim_dict['rlines'][0].set_data(*anim_dict['elems_dis'][0].rline(theta[n]))
     # Update circle position and radial line for all elements except the biggest one.
     for i in range(1, len(anim_dict['elems_dis'])):
         # Use the outer extremity of the radial line as center of the new circle.
@@ -321,11 +324,11 @@ def update_figure_displaced(n, anim_dict, theta, display_fig=False):
         xc, yc = rline_pos[0][1], rline_pos[1][1]
         anim_dict['elems_dis'][i].circle = Circle(R=anim_dict['elems_dis'][i].circle.R, xc=xc, yc=yc)
         # Update the circle on the axis.
-        anim_dict['circles2'][i].set_data(*anim_dict['elems_dis'][i].circle.coordinates())
+        anim_dict['circles'][i].set_data(*anim_dict['elems_dis'][i].circle.coordinates())
         # Update the radial line on the axis
-        anim_dict['rlines2'][i].set_data(*anim_dict['elems_dis'][i].rline(theta[n]))
+        anim_dict['rlines'][i].set_data(*anim_dict['elems_dis'][i].rline(theta[n]))
     # Update the horizontal line on the axis for the smallest circle.
-    anim_dict['hline2'].set_data(*anim_dict['elems_dis'][-1].hline(theta[n], xmax=0.0))
+    anim_dict['hline'].set_data(*anim_dict['elems_dis'][-1].hline(theta[n], xmax=0.0))
     
     rline_pos = anim_dict['elems_dis'][-1].rline(theta[n])
     x, y = rline_pos[0][1], rline_pos[1][1]
@@ -340,7 +343,7 @@ def update_figure_displaced(n, anim_dict, theta, display_fig=False):
 
     # Compute and update the signal.
     s = numpy.sum(numpy.vstack([elem.signal(theta[: n + 1]) for elem in anim_dict['elems_dis']]), axis=0)
-    anim_dict['signal2'].set_data(theta[:n + 1], s[::-1])
+    anim_dict['signal'].set_data(theta[:n + 1], s[::-1])
         
     if display_fig:
-        display(anim_dict['fig2'])
+        display(anim_dict['fig'])
