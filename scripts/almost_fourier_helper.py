@@ -7,8 +7,6 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     """ creates initial figure needed for animation, but it doesn't display it.
     """
     
-    pyplot.ioff() #to avoid displaying figure. 
-
     fig, ax = pyplot.subplots(figsize=(14.0, 6.0))
     pyplot.tight_layout()
     fig.suptitle('Frequency = {:.2f}'.format(freq_arr[0]))
@@ -57,18 +55,26 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
 
     ax2.set_xlim(0.9,4.1)
     ax2.set_ylim(-0.3,1.1)
-    ax2.grid();
+    ax2.grid()
+    pyplot.close()
     
     return {'fig': fig, 'WSP': wrapped_signal_plot, 'AF': almost_fourier_plot}
 
 
-def update_figure(f, anim_dict, g_t, freq_arr, t_arr, display_fig=False):
+def comp_fourier_term(f, t):
     
-    res = g_t * anim_dict['_comp_fourier'](freq_arr[f], t_arr)
+    circ = numpy.exp(-2*numpy.pi*1j*f*t)
+    
+    return circ
+
+
+def update_figure(f, anim_dict, g_t, t_arr, freq_arr, display_fig=False):
+    
+    res = g_t * comp_fourier_term(freq_arr[f], t_arr)
     
     anim_dict['fig'].suptitle('Frequency = {:.2f}'.format(freq_arr[f]))
     
-    anim_dict['xcm_arr'][f] = anim_dict['_get_xcm'](res)
+    anim_dict['xcm_arr'][f] = numpy.mean(res.real)
     
     anim_dict['WSP'].set_data(res.real, res.imag)
     
@@ -76,3 +82,23 @@ def update_figure(f, anim_dict, g_t, freq_arr, t_arr, display_fig=False):
     
     if display_fig:
         display(anim_dict['fig'])
+        
+
+def create_animation(sinewave, time, freqs):
+    
+    wrap0 = sinewave * comp_fourier_term(freqs[0], time)
+    
+    xcm_array = numpy.full_like(freqs, None)
+    xcm_array[0] = numpy.mean(wrap0.real)
+    
+    anim_dict = create_init_fig(wrap0, freqs, xcm_array)    
+    anim_dict['xcm_arr'] = xcm_array
+    
+    anim = animation.FuncAnimation(anim_dict['fig'], update_figure,
+                               frames=len(freqs), 
+                               fargs=(anim_dict, sinewave, time, freqs),
+                               interval=300)
+    # Display the animation.
+    return HTML(anim.to_html5_video())
+
+
