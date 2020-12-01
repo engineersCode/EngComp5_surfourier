@@ -7,7 +7,7 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     """ creates initial figure needed for animation, but it doesn't display it.
     """
     
-    fig, ax = pyplot.subplots(figsize=(14.0, 6.0))
+    fig, ax = pyplot.subplots(figsize=(10.0, 5.0))
     pyplot.tight_layout()
     fig.suptitle('Frequency = {:.2f}'.format(freq_arr[0]))
 
@@ -51,9 +51,9 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     ax2.spines['top'].set_color('none')
     ax2.axis('scaled', adjustable='box')
     ax2.set_xlabel('Frequency')
-    ax2.set_ylabel('xcm', labelpad=-15)
+    ax2.set_ylabel('xcm', labelpad=-7)
 
-    ax2.set_xlim(0.9,4.1)
+    ax2.set_xlim(0.9,5.1)
     ax2.set_ylim(-0.3,1.1)
     ax2.grid()
     pyplot.close()
