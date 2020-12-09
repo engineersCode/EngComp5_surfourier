@@ -23,9 +23,10 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
 
     ylabels = [-1, -0.5, None, 0.5, 1]
 
-    ax1.set_yticklabels(ylabels)
     ax1.set_xticks(ticks)
     ax1.set_yticks(ticks)
+    ax1.set_yticklabels(ylabels)
+
 
     wrapped_signal_plot = ax1.plot(wrapped_signal.real, 
                                    wrapped_signal.imag, alpha=0.5,
@@ -40,7 +41,8 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     ax1.spines['top'].set_color('none')
 
 
-    ax1.axis('scaled', adjustable='box')
+    ax1.set_adjustable('box')
+    ax1.set_aspect('equal')
     ax1.set_xlim(-1.1,1.1)
     ax1.set_ylim(-1.1,1.1)
     ax1.legend(loc='upper left', bbox_to_anchor=(0.48, 1.12))
@@ -49,13 +51,15 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     almost_fourier_plot = ax2.plot(freq_arr[0],  xcm_arr[0], '-')[0]
     ax2.spines['right'].set_color('none')
     ax2.spines['top'].set_color('none')
-    ax2.axis('scaled', adjustable='box')
+    ax2.set_adjustable('box')
+    ax2.set_aspect('equal')
     ax2.set_xlabel('Frequency')
-    ax2.set_ylabel('xcm', labelpad=-7)
+    ax2.set_ylabel('xcm')
 
     ax2.set_xlim(0.9,5.1)
     ax2.set_ylim(-0.3,1.1)
     ax2.grid()
+    pyplot.tight_layout()
     pyplot.close()
     
     return {'fig': fig, 'WSP': wrapped_signal_plot, 'AF': almost_fourier_plot}
