@@ -8,7 +8,7 @@ The course uses the Python programming language and the Jupyter open-source tool
 
 *Manipulate complex numbers using Python. Explore information in wave form, programmatically and through visualization. Apply Fourier analysis on wave-like data.*
 
-**Pre-requisites: learning modules *EngComp 1* and *EngComp 4* of our collection.
+**Pre-requisites: learning modules [*EngComp 1*](https://github.com/engineersCode/EngComp1_offtheground) and [*EngComp 4*](https://github.com/engineersCode/EngComp4_landlinear) of our collection.**
 
 ### [Lesson 0](http://go.gwu.edu/engcomp5lesson0): The simplicity of the complex
 
