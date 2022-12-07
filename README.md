@@ -15,7 +15,7 @@ The course uses the Python programming language and the Jupyter open-source tool
 What are complex numbers? Visualize it! Play with complex numbers in Python. Functions of complex numbers. Euler's formula. 
 *Geometry of complex numbers*— The conjugate is a reflection. Geometry of multiplication and De Moivre's formula. Reciprocal and division. Patterns i^n.
 
-### Lesson 1: Untangle any waveform
+### [Lesson 1](http://go.gwu.edu/engcomp5lesson0): Untangle any waveform
 
 What is sound? Waveforms. Play with audio in Python. Read and write audio files. Understanding the Fourier transform.
 
