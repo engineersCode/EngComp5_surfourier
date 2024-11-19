@@ -15,9 +15,9 @@ The course uses the Python programming language and the Jupyter open-source tool
 What are complex numbers? Visualize it! Play with complex numbers in Python. Functions of complex numbers. Euler's formula. 
 *Geometry of complex numbers*— The conjugate is a reflection. Geometry of multiplication and De Moivre's formula. Reciprocal and division. Patterns i^n.
 
-### [Lesson 1](http://go.gwu.edu/engcomp5lesson0): Untangle any waveform
+### [Lesson 1](http://go.gwu.edu/engcomp5lesson1): Untangle any waveform
 
-What is sound? Waveforms. Play with audio in Python. Read and write audio files. Understanding the Fourier transform.
+What is sound? Waveforms. Play with audio in Python. Read and write audio files. Understanding the Fourier transform, with an "almost" Fourier approach: wind a waveform around a unit circle; the winding frequency affects how the signal maps on the complex plane; when the frequency is "just right," see a peak in the mean value of the real parts of the wound signal—we have a "frequency detection machine"!
 
 ## Copyright and License
 
