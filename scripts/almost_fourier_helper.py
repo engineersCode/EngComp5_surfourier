@@ -7,8 +7,8 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     """ creates initial figure needed for animation, but it doesn't display it.
     """
     
-    fig, ax = pyplot.subplots(figsize=(10.0, 5.0))
-    pyplot.tight_layout()
+    fig = pyplot.figure(figsize=(7.0, 4.0))
+    fig.subplots_adjust(wspace=0, left=0, right=1, top=1, bottom=0)      # Remove padding
     fig.suptitle('Frequency = {:.2f}'.format(freq_arr[0]))
 
     ax1 = pyplot.subplot2grid((1, 3), (0, 0))
@@ -45,16 +45,15 @@ def create_init_fig(wrapped_signal, freq_arr, xcm_arr):
     ax1.set_aspect('equal')
     ax1.set_xlim(-1.1,1.1)
     ax1.set_ylim(-1.1,1.1)
-    ax1.legend(loc='upper left', bbox_to_anchor=(0.48, 1.12))
+    ax1.legend(loc='lower left', bbox_to_anchor=(0.3, 1.05))
 
     #f_list = numpy.full_like(freqs, None)
     almost_fourier_plot = ax2.plot(freq_arr[0],  xcm_arr[0], '-')[0]
-    ax2.spines['right'].set_color('none')
-    ax2.spines['top'].set_color('none')
+
     ax2.set_adjustable('box')
     ax2.set_aspect('equal')
     ax2.set_xlabel('Frequency')
-    ax2.set_ylabel('xcm')
+    ax2.set_ylabel('mean value, real part', fontsize=10)
 
     ax2.set_xlim(0.9,5.1)
     ax2.set_ylim(-0.3,1.1)
